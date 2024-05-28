@@ -54,19 +54,19 @@ class AdminController extends Controller
         $user_type = 0;
 
        if($requset->role == "1"){
-        $user_type = 2;
+        $user_type = 2; //user admin
        }
        elseif($requset->role =="2"){
-        $user_type = 3;
+        $user_type = 3;//editor
        }
        elseif($requset->role =="3"){
-        $user_type = 4;
+        $user_type = 4;//publisher
        }
        elseif($requset->role =="4"){
-        $user_type = 5;
+        $user_type = 5;//deletor
        }
        elseif($requset->role =="5"){
-        $user_type = 6;
+        $user_type = 6;//creator
        }
         //dd($password);
       
@@ -85,7 +85,29 @@ class AdminController extends Controller
 
         return redirect('admin/dashboard')->withSuccess('user added successfully');
     }
+    public function addposts(Request $requset)
+    {
+        //dd($requset->all());
+        $posts=[
 
+            'post_name'=>$requset->name,
+            'status'=> 0 //created;
+        ];
+       
+        
+         DB::table('table_post')->insert($posts);
+
+        return redirect('useradmin/dashboard')->withSuccess('post added successfully');
+    }
+    public function getposts(Request $requset)
+    {
+        
+        
+        
+        $posts_details= DB::table('table_post')->get();
+
+        return view('useradmin.dashboard',compact('posts_details'));
+    }
 
 
     

@@ -25,6 +25,7 @@ Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 Route::post('/roles',[AdminController::class,'roles'])->name('roles');
 Route::post('/add_user',[AdminController::class,'add_user'])->name('add_user');
 
+Route::post('addposts', [AdminController::class, 'addposts'])->name('addposts');
 
 Route::get('auth/login',function(){
 return view('auth.login');
@@ -53,7 +54,7 @@ Route::group(['middleware'=>'deletor'],function(){
         });
 });
 Route::group(['middleware'=>'useradmin'],function(){
-    Route::get('useradmin/dashboard',function(){
-        return view('useradmin.dashboard');
-        });
+    Route::get('useradmin/dashboard', [AdminController::class, 'getposts'])->name('useradmin.dashboard');
+
+
 });
