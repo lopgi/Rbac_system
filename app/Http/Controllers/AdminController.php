@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 use Hash;
+use Auth;
+use App\Models\User;
 class AdminController extends Controller
 {
 
@@ -101,13 +103,26 @@ class AdminController extends Controller
     }
     public function getposts(Request $requset)
     {
-        
-        
-        
         $posts_details= DB::table('table_post')->get();
 
         return view('useradmin.dashboard',compact('posts_details'));
-    }
+    }  
+    public function geteditorpost(Request $requset)
+    {
+        $posts_details= DB::table('table_post')
+        ->get();
+        
+        $userType = Auth::user()->user_type;
+        $user_id = Auth::user()->role_id;
+        $getpermission=DB::table('table_role')
+        ->select('permission_name')
+        ->where('id', $user_id)->get();
+        return view('editor.dashboard',compact('posts_details','getpermission'));
+    }  
+    
+        
+        
+        
 
 
     

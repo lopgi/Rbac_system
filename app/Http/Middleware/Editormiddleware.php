@@ -23,6 +23,17 @@ class Editormiddleware
                 return $next($request);
 
             }
+            elseif(Auth::user()->user_type == 4 )
+            {
+                return $next($request);
+
+            }
+            elseif(Auth::user()->user_type == 5 )
+            {
+                return $next($request);
+
+            }
+
         
             else{
                 Auth::logout();

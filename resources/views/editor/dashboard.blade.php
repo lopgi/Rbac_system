@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">EditorDashboard</h1>
+                    <h1 class="m-0">Dashboard</h1>
                 </div>
             </div>
         </div>
@@ -32,9 +32,7 @@
                           </div>
                       @endif
                 <!-- Button to trigger Add User modal -->
-                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addUserModal">
-                    Add post
-                </button>
+                
                 <br>
 
                 <h3 class="card-title">posts</h3>
@@ -49,7 +47,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                    
+                    @foreach($posts_details as $posts)
+                    <tr>
+                        <td>{{$posts->id}}</td>
+                        <td>{{$posts->post_name}}</td>
+                        <td>@if($posts->status == 0)
+                            created
+                            @endif
+                        </td>
+                        <td>
+                        @foreach($getpermission as $permission)
+    @php
+        $permissions = json_decode($permission->permission_name);
+    @endphp
+
+    @foreach($permissions as $singlePermission)
+        <button class="btn btn-primary">{{ $singlePermission }}</button>
+    @endforeach
+@endforeach
+                        </td>
+
+
+                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
 
