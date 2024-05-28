@@ -55,7 +55,7 @@
                             <td>{{$value->name}}</td>
                             <td>{{$value->email}}</td>
                             <td>{{$value->role_name}}</td>
-                            <td></td>
+                            <td><button type="submit" class="btn btn-warning">Edit</button> <button type="submit" class="btn btn-danger">Delete</button></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -134,7 +134,7 @@
                                 <span class="badge badge-primary">{{$permission}}</span>
                             @endforeach
                             </td>
-                            <td></td>
+                            <td><button type="submit" class="btn btn-warning">Edit</button> <button type="submit" class="btn btn-danger">Delete</button></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -151,7 +151,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('editors') }}" method="post">
+                                <form action="{{ route('roles') }}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <label for="roleName">Role Name:</label>

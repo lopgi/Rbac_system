@@ -8,7 +8,7 @@ use Hash;
 class AdminController extends Controller
 {
 
-    public function editors(Request $requset)
+    public function roles(Request $requset)
     {
         //dd($requset->all());
         $permissions=json_encode($requset->permission);
@@ -29,7 +29,7 @@ class AdminController extends Controller
     }
 
 
-    public function geteditor(Request $request)
+    public function getusers(Request $request)
     {
     
         $editor_details=DB::table('table_role')->get();
@@ -64,6 +64,9 @@ class AdminController extends Controller
        }
        elseif($requset->role =="4"){
         $user_type = 5;
+       }
+       elseif($requset->role =="5"){
+        $user_type = 6;
        }
         //dd($password);
       

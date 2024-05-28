@@ -22,7 +22,7 @@ Route::post('/login',[AuthController::class,'AuthLogin'])->name('AuthLogin');
 Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
 
-Route::post('/editors',[AdminController::class,'editors'])->name('editors');
+Route::post('/roles',[AdminController::class,'roles'])->name('roles');
 Route::post('/add_user',[AdminController::class,'add_user'])->name('add_user');
 
 
@@ -31,7 +31,7 @@ return view('auth.login');
 });
 
 Route::group(['middleware'=>'admin'],function(){
-    Route::get('admin/dashboard', [AdminController::class, 'geteditor'])->name('admin.dashboard');
+    Route::get('admin/dashboard', [AdminController::class, 'getusers'])->name('admin.dashboard');
 
         });
     
@@ -40,5 +40,20 @@ Route::group(['middleware'=>'admin'],function(){
 Route::group(['middleware'=>'editor'],function(){
     Route::get('editor/dashboard',function(){
         return view('editor.dashboard');
+        });
+});
+Route::group(['middleware'=>'publisher'],function(){
+    Route::get('publisher/dashboard',function(){
+        return view('publisher.dashboard');
+        });
+});
+Route::group(['middleware'=>'deletor'],function(){
+    Route::get('deletor/dashboard',function(){
+        return view('deletor.dashboard');
+        });
+});
+Route::group(['middleware'=>'useradmin'],function(){
+    Route::get('useradmin/dashboard',function(){
+        return view('useradmin.dashboard');
         });
 });

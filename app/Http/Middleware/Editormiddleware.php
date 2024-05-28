@@ -18,7 +18,7 @@ class Editormiddleware
         
         if(!empty(Auth::check()))
         {
-            if(Auth::user()->user_type ==2 )
+            if(Auth::user()->user_type ==3 )
             {
                 return $next($request);
 
