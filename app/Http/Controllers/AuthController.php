@@ -14,7 +14,7 @@ class AuthController extends Controller
     //return 
     public function login()
     {
-     //dd(Hash::make(345));
+     //dd(Hash::make(12345));
     //    if(!empty(Auth::check()))
     //    return redirect('admin/dashboard');
    return view('auth.login');

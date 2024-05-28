@@ -129,7 +129,11 @@
                         <tr>
                             <th>{{$value->id}}</th>
                             <td>{{$value->role_name}}</td>
-                            <td>{{$value->permission_id}}</td>
+                            <td><?php $permissions = json_decode($value->permission_name); ?>
+                            @foreach($permissions as $permission)
+                                <span class="badge badge-primary">{{$permission}}</span>
+                            @endforeach
+                            </td>
                             <td></td>
                         </tr>
                         @endforeach
@@ -155,12 +159,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="permission" class="form-label">Choose an option</label>
-                                        <select class="form-control" id="permission" name="permission">
+                                        <select class="form-control" id="permission" name="permission[]" multiple>
                                             <option selected>Choose permission</option>
-                                            <option value="1">create-post</option>
-                                            <option value="2">edit-post</option>
-                                            <option value="3">publish-post</option>
-                                            <option value="4">delete-post</option>
+                                            <option value='create-post'>create-post</option>
+                                            <option value='edit-post'>edit-post</option>
+                                            <option value='publish-post'>publish-post</option>
+                                            <option value='delete-post'>delete-post</option>
                                         </select>
                                     </div>
                                     <div class="modal-footer">

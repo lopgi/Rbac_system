@@ -11,16 +11,18 @@ class AdminController extends Controller
     public function editors(Request $requset)
     {
         //dd($requset->all());
+        $permissions=json_encode($requset->permission);
+       
         $data=[
           'role_name' => $requset->roleName,
-           'permission_id' =>$requset->permission,
+           'permission_name' =>  $permissions,
            'created_at'=>now(),
            'updated_at'=>now(),
 
 
         ];
    
-
+//dd(  $data);
         DB::table('table_role')->insert($data);
 
         return redirect('admin/dashboard')->withSuccess('role added successfully');
@@ -31,7 +33,7 @@ class AdminController extends Controller
     {
     
         $editor_details=DB::table('table_role')->get();
-
+//dd($editor_details);
         $user_details = DB::table('users')
         ->select('users.id','name','email','table_role.role_name')
         ->leftjoin('table_role','table_role.id','=','users.role_id')
@@ -46,16 +48,22 @@ class AdminController extends Controller
    
     public function add_user(Request $requset)
     {
-         //dd( $requset->all());
+        // dd( $requset->all());
         $password=Hash::make($requset->password);
 
         $user_type = 0;
 
-       if($requset->role ==1){
+       if($requset->role == "1"){
         $user_type = 2;
        }
-       elseif($requset->role ==2){
+       elseif($requset->role =="2"){
         $user_type = 3;
+       }
+       elseif($requset->role =="3"){
+        $user_type = 4;
+       }
+       elseif($requset->role =="4"){
+        $user_type = 5;
        }
         //dd($password);
       
@@ -68,7 +76,7 @@ class AdminController extends Controller
             'created_at'=>date('Y-m-d H:i:s'),
            
         ];
-      //dd( $student_details);
+     // dd($user_details);
 
         DB::table('users')->insert($user_details);
 
