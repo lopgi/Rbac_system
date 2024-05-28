@@ -10,13 +10,13 @@ use App\Models\User;
 class AdminController extends Controller
 {
 
-    public function roles(Request $requset)
+    public function roles(Request $request)
     {
         //dd($requset->all());
-        $permissions=json_encode($requset->permission);
+        $permissions=json_encode($request->permission);
        
         $data=[
-          'role_name' => $requset->roleName,
+          'role_name' => $request->roleName,
            'permission_name' =>  $permissions,
            'created_at'=>now(),
            'updated_at'=>now(),
@@ -48,36 +48,36 @@ class AdminController extends Controller
     
    
    
-    public function add_user(Request $requset)
+    public function add_user(Request $request)
     {
         // dd( $requset->all());
-        $password=Hash::make($requset->password);
+        $password=Hash::make($request->password);
 
         $user_type = 0;
 
-       if($requset->role == "1"){
+       if($request->role == "1"){
         $user_type = 2; //user admin
        }
-       elseif($requset->role =="2"){
+       elseif($request->role =="2"){
         $user_type = 3;//editor
        }
-       elseif($requset->role =="3"){
+       elseif($request->role =="3"){
         $user_type = 4;//publisher
        }
-       elseif($requset->role =="4"){
+       elseif($request->role =="4"){
         $user_type = 5;//deletor
        }
-       elseif($requset->role =="5"){
+       elseif($request->role =="5"){
         $user_type = 6;//creator
        }
         //dd($password);
       
         $user_details=[
-            'name'=> $requset->name,
-            'email'=> $requset->email,
+            'name'=> $request->name,
+            'email'=> $request->email,
             'password'=> $password,
             'user_type'=>$user_type,
-            'role_id' =>$requset->role,
+            'role_id' =>$request->role,
             'created_at'=>date('Y-m-d H:i:s'),
            
         ];
@@ -87,27 +87,22 @@ class AdminController extends Controller
 
         return redirect('admin/dashboard')->withSuccess('user added successfully');
     }
-    public function addposts(Request $requset)
+    public function addposts(Request $request)
     {
-        //dd($requset->all());
+       // dd($requset->all());
         $posts=[
 
-            'post_name'=>$requset->name,
+            'post_name'=>$request->name,
             'status'=> 0 //created;
         ];
        
         
          DB::table('table_post')->insert($posts);
 
-        return redirect('useradmin/dashboard')->withSuccess('post added successfully');
+        return redirect('editor/dashboard')->withSuccess('post added successfully');
     }
-    public function getposts(Request $requset)
-    {
-        $posts_details= DB::table('table_post')->get();
-
-        return view('useradmin.dashboard',compact('posts_details'));
-    }  
-    public function geteditorpost(Request $requset)
+   
+    public function geteditorpost(Request $request)
     {
         $posts_details= DB::table('table_post')
         ->get();
@@ -118,7 +113,22 @@ class AdminController extends Controller
         ->select('permission_name')
         ->where('id', $user_id)->get();
         return view('editor.dashboard',compact('posts_details','getpermission'));
-    }  
+    } 
+    public function publish_post(Request $request) 
+    {
+        $id = $request->id;
+
+        $post = DB::table('table_post')->where('id', $id)->first();
+    
+        if ($post) {
+            $newStatus = $post->status == 1 ? 0 : 1;
+    
+            $posts_details = DB::table('table_post')->where('id', $id)->update(['status' => $newStatus]);
+        }
+
+        return redirect('editor/dashboard')->withSuccess('successfully updated');
+
+    }
     
         
         

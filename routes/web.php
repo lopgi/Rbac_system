@@ -40,14 +40,10 @@ Route::get('admin/dashboard', [AdminController::class, 'getusers'])->name('admin
 
 Route::group(['middleware'=>'editor'],function(){
 Route::get('editor/dashboard', [AdminController::class, 'geteditorpost'])->name('editor.dashboard');
+Route::post('editor/dashboard', [AdminController::class, 'publish_post'])->name('publish_post');
 
 
 });
 
 
-Route::group(['middleware'=>'useradmin'],function(){
-Route::get('useradmin/dashboard', [AdminController::class, 'getposts'])->name('useradmin.dashboard');
-
-
-});
 

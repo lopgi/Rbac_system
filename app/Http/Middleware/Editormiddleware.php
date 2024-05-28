@@ -33,6 +33,11 @@ class Editormiddleware
                 return $next($request);
 
             }
+            elseif(Auth::user()->user_type == 2 )
+            {
+                return $next($request);
+
+            }
 
         
             else{

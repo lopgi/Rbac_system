@@ -30,7 +30,7 @@ class AuthController extends Controller
 
             }
             else if(Auth::User()->user_type == 2){
-                return redirect('useradmin/dashboard');
+                return redirect('editor/dashboard');
 
             }
             else if(Auth::User()->user_type == 3){

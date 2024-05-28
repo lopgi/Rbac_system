@@ -36,7 +36,11 @@
                 <br>
 
                 <h3 class="card-title">posts</h3>
-                <table class="table table-bordered">
+                @if(Auth::user()->role_id== 1)
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addUserModal">Add post</button>
+                @endif
+
+               <table class="table table-bordered"> </br>
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
@@ -53,20 +57,48 @@
                         <td>{{$posts->post_name}}</td>
                         <td>@if($posts->status == 0)
                             created
+                            @elseif($posts->status == 1)
+                            published
                             @endif
                         </td>
                         <td>
-                        @foreach($getpermission as $permission)
-    @php
-        $permissions = json_decode($permission->permission_name);
-    @endphp
+    @foreach($getpermission as $permission)
+        @php
+            $permissions = json_decode($permission->permission_name);
+        @endphp
 
-    @foreach($permissions as $singlePermission)
-        <button class="btn btn-primary">{{ $singlePermission }}</button>
+        @foreach($permissions as $singlePermission)
+            @php
+                $actions = explode(',', $singlePermission);
+            @endphp
+
+            @foreach($actions as $action)
+                @if($action == 'publish-post')
+                    <form action="{{route('publish_post',['id' => $posts->id])}}" method="POST" style="display: inline;">
+                        @csrf
+                        @if($posts->id && $posts->status == 0)
+                        <button type="submit" class="btn btn-success">Publish</button>
+
+                            @else($posts->id && $posts->status == 1)
+                           
+                        <button type="submit" class="btn btn-warning">UnPublish</button>
+                       @endif
+                    </form>
+                @elseif($action == 'edit-post')
+                    <form action="" method="GET" style="display: inline;">
+                        <button type="submit" class="btn btn-secondary">Edit</button>
+                    </form>
+                @elseif($action == 'delete-post')
+                    <form action="" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                @endif
+            @endforeach
+        @endforeach
     @endforeach
-@endforeach
-                        </td>
-
+</td>
 
                     </tr>
                     @endforeach
@@ -78,13 +110,13 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addUserLabel">Add User</h5>
+                                <h5 class="modal-title" id="addUserLabel">Add post</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                              <form action="" method="post">
+                              <form action="{{route('addposts')}}" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Post Name:</label>
