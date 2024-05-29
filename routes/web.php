@@ -26,6 +26,10 @@ Route::post('/roles',[AdminController::class,'roles'])->name('roles');
 Route::post('/add_user',[AdminController::class,'add_user'])->name('add_user');
 
 Route::post('addposts', [AdminController::class, 'addposts'])->name('addposts');
+Route::post('editpost', [AdminController::class, 'editpost'])->name('editpost');
+Route::post('deletepost', [AdminController::class, 'deletepost'])->name('deletepost');
+Route::post('deleteuser', [AdminController::class, 'deleteuser'])->name('deleteuser');
+Route::post('deletrole', [AdminController::class, 'deletrole'])->name('deletrole');
 
 Route::get('auth/login',function(){
 return view('auth.login');

@@ -38,6 +38,16 @@ class Editormiddleware
                 return $next($request);
 
             }
+            elseif(Auth::user()->user_type == 6)
+            {
+                return $next($request);
+
+            }
+            elseif(Auth::user()->user_type == 7)
+            {
+                return $next($request);
+
+            }
 
         
             else{

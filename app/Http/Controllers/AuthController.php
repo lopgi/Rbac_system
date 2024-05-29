@@ -45,6 +45,10 @@ class AuthController extends Controller
                 return redirect('editor/dashboard');
 
             }
+            else{
+                return redirect('editor/dashboard');
+
+            }
             
            
         }
